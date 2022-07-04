@@ -1,3 +1,4 @@
+from tempfile import tempdir
 from celery import shared_task
 from celery import Celery
 from django.contrib.auth import get_user_model
@@ -6,17 +7,23 @@ from django.conf import settings
 
 @shared_task
 def test():
-    for i in range(10):
-        print(i)
-    return "done"
+    return None
+# def user_details():
+#     users = get_user_model().objects.all()
+#     return users
 @shared_task(blind = True)
 def send_mail_task():
-    users = get_user_model().objects.all()
+    users = get_user_model().objects.all().values()
     print(users)
+    for i in users:
+        print(i)
+        
     for user in users:
+        print(user.email,"jjjjj")
         mail_subject = "hi! celery"
-        message = "this is demo mail for django celery"
+        message = "this is demo mail for django celery asdhashdjas"
         to_mail = user.email
+        print("@#@@@@@",to_mail)
         # send_mail(
         #     subject = mail_subject,
         #     message = message,
@@ -26,11 +33,11 @@ def send_mail_task():
         # )
         send_mail(
             'DB testing',
-            ' bla bla bla !!!!',
+            ' It is break time',
             'drashtij59@gmail.com',
             [to_mail],
             fail_silently = True,
         )
-
-        print(to_mail,"skhjkjhashadhs")
-        return "yo i got mail"
+    #     print("line---36")
+        # print(to_mail,"skhjkjhashadhs")
+        return "notification"
