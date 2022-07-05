@@ -13,10 +13,7 @@ def test():
 #     return users
 @shared_task(blind = True)
 def send_mail_task():
-    users = get_user_model().objects.all().values()
-    print(users)
-    for i in users:
-        print(i)
+    users = get_user_model().objects.all()
         
     for user in users:
         print(user.email,"jjjjj")
@@ -38,6 +35,13 @@ def send_mail_task():
             [to_mail],
             fail_silently = True,
         )
-    #     print("line---36")
-        # print(to_mail,"skhjkjhashadhs")
-        return "notification"
+        print("line---36")
+        print(to_mail,"skhjkjhashadhs")
+    return "notification"
+    
+@shared_task(blind = True)
+def square():
+    l1=[]
+    for i in range(800):
+        l1.append(i**i)
+    return l1
